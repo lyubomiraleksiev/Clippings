@@ -16,7 +16,6 @@ export class Price {
     private async verify(filteredProductsArray: Product[]) {
         const productsArr = $$('div.product-tile');
         await productsArr.each(async (product: ElementFinder | undefined, index: number | undefined) => {
-            console.log('Index: ' + index);
             if (product && index) {
                 expect(filteredProductsArray[index].price).to.eq(Number((await product.$('span[data-testid="component-price-regular"]').getText()).replace('€' , '')));
                 expect(filteredProductsArray[index].manufacturer).to.eq(await product.$('div[class="p-r-x3 text-semibold"]').getText());
@@ -52,9 +51,7 @@ export class Price {
 
     public async verifyFilterWithinRange(min: number, max: number) {
         let filteredArray: Product[] = [];
-        console.log(categories.allProducts);
         filteredArray = categories.allProducts.filter((product) => product.price > min && product.price < max);
-        console.log(filteredArray);
         await this.verify(filteredArray);
     }
 }
